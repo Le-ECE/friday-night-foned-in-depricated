@@ -30,3 +30,5 @@ You should have everything ready for compiling the game! Follow the guide below 
 At the moment, you can optionally fix the transition bug in songs with zoomed out cameras.
 - Run `haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons` in the terminal/command-prompt.
 and you should be good to go there.
+
+Once you have all those installed, it's pretty easy to compile the game. You just need to run 'lime test html5 -debug' in the root of the project to build and run the HTML5 version. Running 'lime teste html5 -release' will disable the debug window that may pop up when assets are missing.
