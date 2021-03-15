@@ -1,5 +1,5 @@
 # Friday Night Foned  In
-![image](https://github.com/Le-ECE/friday-night-foned-in/blob/master/fonedin.png)
+![image](/fonedin.png)
 
 You can play directly in your browser right here: https://phykro.itch.io/fonedin
 
