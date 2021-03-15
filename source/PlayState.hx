@@ -145,8 +145,17 @@ class PlayState extends MusicBeatState
 	var downR:Bool;
 	var leftR:Bool;
 
-	var inputWidth:Float;
 	var pauseKey:Bool;
+
+	var noteWidth:Float;
+	var pauseBorderX:Float;
+	var pauseBorderY:Float;
+
+	var arrowStart:Float;
+	var leftDownBorder:Float;
+	var downUpBorder:Float;
+	var upRightBorder:Float;
+	var arrowEnd:Float;
 	
 	public static var campaignScore:Int = 0;
 
@@ -1971,42 +1980,50 @@ class PlayState extends MusicBeatState
 
 		pauseKey = false;
 
-		inputWidth = FlxG.width/2 + 50;
+		noteWidth = Note.swagWidth;
+		pauseBorderX = FlxG.width/4;
+		pauseBorderY = FlxG.height/4;
+
+		arrowStart = FlxG.width/2 + 50;
+		leftDownBorder = arrowStart + noteWidth;
+		downUpBorder = leftDownBorder + noteWidth;
+		upRightBorder = downUpBorder + noteWidth;
+		arrowEnd = upRightBorder + noteWidth;
 
 		for (touch in FlxG.touches.list)
 			{
 				if (touch.pressed) {
-					if(touch.screenX > inputWidth && touch.screenX < inputWidth + Note.swagWidth*1)
+					if(touch.screenX >= arrowStart && touch.screenX < leftDownBorder)
 						left = true;
-					if(touch.screenX > inputWidth + Note.swagWidth*1 && touch.screenX < inputWidth + Note.swagWidth*2)
+					if(touch.screenX >= leftDownBorder && touch.screenX < downUpBorder)
 						down = true;
-					if(touch.screenX > inputWidth + Note.swagWidth*2 && touch.screenX < inputWidth + Note.swagWidth*3)
+					if(touch.screenX >= downUpBorder && touch.screenX < upRightBorder)
 						up = true;
-					if(touch.screenX > inputWidth + Note.swagWidth*3 && touch.screenX < inputWidth + Note.swagWidth*4)
+					if(touch.screenX >= upRightBorder && touch.screenX <= arrowEnd)
 						right = true;
 				}
 
 				if (touch.justPressed) {
-					if(touch.screenX < FlxG.width/4 && touch.screenY < FlxG.height/4)
+					if(touch.screenX <= pauseBorderX && touch.screenY <= pauseBorderY)
 						pauseKey = true;
-					if(touch.screenX > inputWidth && touch.screenX < inputWidth + Note.swagWidth*1)
+					if(touch.screenX >= arrowStart && touch.screenX < leftDownBorder)
 						leftP = true;
-					if(touch.screenX > inputWidth + Note.swagWidth*1 && touch.screenX < inputWidth + Note.swagWidth*2)
+					if(touch.screenX >= leftDownBorder && touch.screenX < downUpBorder)
 						downP = true;
-					if(touch.screenX > inputWidth + Note.swagWidth*2 && touch.screenX < inputWidth + Note.swagWidth*3)
+					if(touch.screenX >= downUpBorder && touch.screenX < upRightBorder)
 						upP = true;
-					if(touch.screenX > inputWidth + Note.swagWidth*3 && touch.screenX < inputWidth + Note.swagWidth*4)
+					if(touch.screenX >= upRightBorder && touch.screenX <= arrowEnd)
 						rightP = true;
 				}
 
 				if (touch.justReleased) {
-					if(touch.screenX > inputWidth && touch.screenX < inputWidth + Note.swagWidth*1)
+					if(touch.screenX >= arrowStart && touch.screenX < leftDownBorder)
 						leftR = true;
-					if(touch.screenX > inputWidth + Note.swagWidth*1 && touch.screenX < inputWidth + Note.swagWidth*2)
+					if(touch.screenX >= leftDownBorder && touch.screenX < downUpBorder)
 						downR = true;
-					if(touch.screenX > inputWidth + Note.swagWidth*2 && touch.screenX < inputWidth + Note.swagWidth*3)
+					if(touch.screenX >= downUpBorder && touch.screenX < upRightBorder)
 						upR = true;
-					if(touch.screenX > inputWidth + Note.swagWidth*3 && touch.screenX < inputWidth + Note.swagWidth*4)
+					if(touch.screenX >= upRightBorder && touch.screenX <= arrowEnd)
 						rightR = true;
 				}
 			}
@@ -2018,13 +2035,13 @@ class PlayState extends MusicBeatState
 				paused = true;
 	
 				// 1 / 1000 chance for Gitaroo Man easter egg
-				if (FlxG.random.bool(0.1))
-				{
+				//if (FlxG.random.bool(0.1))
+				//{
 					// gitaroo man easter egg
-					FlxG.switchState(new GitarooPause());
-				}
-				else
-					openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+				//	openSubState(new GitarooPause());
+				//}
+				//else
+				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 			}
 
 		if (loadRep) // replay code

@@ -108,7 +108,7 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			if(swipe.distance >= 25){
 				if(swipe.angle >= -45 && swipe.angle <= 45)
-					scrollUp = true;
+					scrollDown = true;
 
 				if(swipe.angle > -135 && swipe.angle < -45){
 					back = true;
@@ -119,7 +119,7 @@ class PauseSubState extends MusicBeatSubstate
 				}
 
 				if((swipe.angle >= -180 && swipe.angle <= -135) || (swipe.angle >= 135 && swipe.angle <= 180))
-					scrollDown = true;
+					scrollUp = true;
 			}
 			else
 				accept = true;
@@ -143,7 +143,8 @@ class PauseSubState extends MusicBeatSubstate
 				case "Resume":
 					close();
 				case "Restart Song":
-					FlxG.resetState();
+					//FlxG.resetState();
+					LoadingState.loadAndSwitchState(new PlayState());
 				case "Exit to menu":
 					PlayState.loadRep = false;
 					FlxG.switchState(new MainMenuState());

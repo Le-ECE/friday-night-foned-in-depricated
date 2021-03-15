@@ -21,7 +21,7 @@
 	<window width="1280" height="720" fps="" background="#000000" hardware="true" vsync="false" />
 
 	<!--HTML5-specific-->
-	<window if="html5" resizable="true" />
+	<window if="html5" orientation="landscape" fullscreen="true" resizable="true" />
 
 	<!--Desktop-specific-->
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
@@ -42,7 +42,7 @@
 
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/preload" rename="assets" exclude="*.mp3" unless="web"/>
-	
+
 	<!-- <define name="PRELOAD_ALL" /> -->
 	<define name="PRELOAD_ALL" unless="web" />
 	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>

@@ -84,16 +84,16 @@ class TitleState extends MusicBeatState
 				StoryMenuState.weekUnlocked[0] = true;
 		}
 
-		#if FREEPLAY
-		FlxG.switchState(new FreeplayState());
-		#elseif CHARTING
-		FlxG.switchState(new ChartingState());
-		#else
-		new FlxTimer().start(1, function(tmr:FlxTimer)
-		{
+		//#if FREEPLAY
+		//FlxG.switchState(new FreeplayState());
+		//#elseif CHARTING
+		//FlxG.switchState(new ChartingState());
+		//#else
+		//new FlxTimer().start(1, function(tmr:FlxTimer)
+		//{
 			startIntro();
-		});
-		#end
+		//});
+		//#end
 	}
 
 	var logoBl:FlxSprite;
@@ -238,14 +238,6 @@ class TitleState extends MusicBeatState
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
 
-		for (touch in FlxG.touches.list)
-		{
-			if (touch.justPressed)
-			{
-				pressedEnter = true;
-			}
-		}
-
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
 		if (gamepad != null)
@@ -258,6 +250,14 @@ class TitleState extends MusicBeatState
 				pressedEnter = true;
 			#end
 		}
+
+		for (touch in FlxG.touches.list)
+			{
+				if (touch.justPressed)
+				{
+					pressedEnter = true;
+				}
+			}
 
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
@@ -277,16 +277,18 @@ class TitleState extends MusicBeatState
 			transitioning = true;
 			// FlxG.sound.music.stop();
 
-			new FlxTimer().start(2, function(tmr:FlxTimer)
-			{
+			FlxG.switchState(new MainMenuState());
+
+			//new FlxTimer().start(2, function(tmr:FlxTimer)
+			//{
 
 				// Get current version of Kade Engine
 
-				var http = new haxe.Http("https://raw.githubusercontent.com/KadeDev/Kade-Engine/master/version.downloadMe");
+				//var http = new haxe.Http("https://raw.githubusercontent.com/KadeDev/Kade-Engine/master/version.downloadMe");
 
-				http.onData = function (data:String) {
+				//http.onData = function (data:String) {
 				  
-				FlxG.switchState(new MainMenuState());
+	
 
 					// Skip update check
 
@@ -300,16 +302,16 @@ class TitleState extends MusicBeatState
 					//{
 					//	FlxG.switchState(new MainMenuState());
 					//}
-				}
+				//}
 				
-				http.onError = function (error) {
-				  trace('error: $error');
-				  FlxG.switchState(new MainMenuState()); // fail but we go anyway
-				}
+				//http.onError = function (error) {
+				//  trace('error: $error');
+				//  FlxG.switchState(new MainMenuState()); // fail but we go anyway
+				//}
 				
-				http.request();
+				//http.request();
 
-			});
+			//});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
 

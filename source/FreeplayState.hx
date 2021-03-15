@@ -200,7 +200,7 @@ class FreeplayState extends MusicBeatState
 		{
 			if(swipe.distance >= 25){
 				if(swipe.angle >= -45 && swipe.angle <= 45)
-					scrollUp = true;
+					scrollDown = true;
 
 				if(swipe.angle > -135 && swipe.angle < -45){
 					back = true;
@@ -211,7 +211,7 @@ class FreeplayState extends MusicBeatState
 				}
 
 				if((swipe.angle >= -180 && swipe.angle <= -135) || (swipe.angle >= 135 && swipe.angle <= 180))
-					scrollDown = true;
+					scrollUp = true;
 			}
 			else
 				accept = true;

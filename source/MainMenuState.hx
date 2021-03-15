@@ -31,7 +31,7 @@ class MainMenuState extends MusicBeatState
 	var newGaming2:FlxText;
 	var newInput:Bool = true;
 
-	public static var kadeEngineVer:String = "1.1.2";
+	public static var kadeEngineVer:String = "1.1.3";
 	public static var gameVer:String = "0.2.7.1";
 
 	var magenta:FlxSprite;
@@ -130,14 +130,14 @@ class MainMenuState extends MusicBeatState
 				{
 					if(swipe.distance >= 25){
 						if(swipe.angle >= -45 && swipe.angle <= 45)
-							scrollUp = true;
+							scrollDown = true;
 
 						if(swipe.angle > -135 && swipe.angle < -45){
 							back = true;
 						}
 
 						if((swipe.angle >= -180 && swipe.angle <= -135) || (swipe.angle >= 135 && swipe.angle <= 180))
-							scrollDown = true;
+							scrollUp = true;
 					}
 					else
 						accept = true;
