@@ -1,6 +1,6 @@
 # Friday Night Foned  In
 
-You can play directly in your browser right here: https://phykro.itch.io/fonedi
+You can play directly in your browser right here: https://phykro.itch.io/fonedin
 
 Please support the official project as well on their itch.io page: https://ninja-muffin24.itch.io/funkin
 
