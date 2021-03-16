@@ -439,19 +439,15 @@ class StoryMenuState extends MusicBeatState
 			case 'mom':
 				grpWeekCharacters.members[0].offset.set(-100, -50);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 0.8 * resizeFactor));
-				
 			case 'parents-christmas':
 				grpWeekCharacters.members[0].offset.set(0, -50);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1.5 * resizeFactor));
-
 			case 'senpai':
 				grpWeekCharacters.members[0].offset.set(-150, -250);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1.25 * resizeFactor));
-
 			default:
 				grpWeekCharacters.members[0].offset.set(0, 0);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1 * resizeFactor));
-				// grpWeekCharacters.members[0].updateHitbox();
 		}
 
 		var stringThing:Array<String> = weekData[curWeek];
