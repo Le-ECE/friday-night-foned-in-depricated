@@ -1,4 +1,4 @@
-# Friday Night Foned  In
+# Friday Night Funkin': Foned In
 ![image](/fonedin.png)
 
 You can play directly in your browser right here: https://phykro.itch.io/fonedin
@@ -9,29 +9,21 @@ Please support the official project as well on their itch.io page: https://ninja
 
 ### Installing the Required Programs
 
-First you need to install Haxe and HaxeFlixel. I'm too lazy to write and keep updated with that setup (which is pretty simple). 
-1. [Install Haxe 4.1.5](https://haxe.org/download/version/4.1.5/) (Download 4.1.5 instead of 4.2.0 because 4.2.0 is broken and is not working with gits properly...)
+First you need to install Haxe and HaxeFlixel. 
+1. [Install Haxe 4.1.5](https://haxe.org/download/version/4.1.5/) (Only version 4.1.5 works, 4.2.1 fixed the git issue but won't compile)
 2. [Install HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/) after downloading Haxe
+  a. Run 'haxelib install lime'
+  b. Run 'haxelib install openfl'
+  c. Run 'haxelib install flixel'
+  d. Run 'haxelib run lime setup flixel'
+7. Optionally, you can run 'haxelib install flixel-tools' and 'haxelib run flixel-tools setup' to setup your IDE to work with haxe and lime.
+8. Run 'haxelib install newgrounds'
+9. Download [git-scm](https://git-scm.com/downloads).
+10. Run `haxelib git polymod https://github.com/larsiusprime/polymod.git`
+11. Run `haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons`
 
-Other installations you'd need is the additional libraries, a fully updated list will be in `Project.xml` in the project root. Currently, these are all of the things you need to install:
-```
-flixel
-flixel-addons
-flixel-ui
-hscript
-newgrounds
-```
-So for each of those type `haxelib install [library]` so shit like `haxelib install newgrounds`
+### Compiling the Game
 
-You'll also need to install polymod. To do this, you need to do a few things first.
-1. Download [git-scm](https://git-scm.com/downloads). Works for Windows, Mac, and Linux, just select your build.
-2. Follow instructions to install the application properly.
-3. Run `haxelib git polymod https://github.com/larsiusprime/polymod.git` in terminal/command-prompt after your git program is installed.
-
-You should have everything ready for compiling the game! Follow the guide below to continue!
-
-At the moment, you can optionally fix the transition bug in songs with zoomed out cameras.
-- Run `haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons` in the terminal/command-prompt.
-and you should be good to go there.
-
-Once you have all those installed, it's pretty easy to compile the game. You just need to run 'lime test html5 -debug' in the root of the project to build and run the HTML5 version. Running 'lime test html5 -minify' will disable the debug window that may pop up when assets are missing.
+1. Open a command line prompt/powershell/terminal window in the root of the game directory. (In Windows, Shift-Right Click > Open Powershell Window Here)
+2. Run 'lime build html5' to compile the game, 'lime run html5' to run it, or 'lime test html5' to do both. You can append '-debug' to enter debugging mode, where pressing tilde (~) will open up the console. Appending '-minify' minimizes some Javascript code.
+3. Running 'lime run html5' or 'lime test html5' will open the game in a browser tab. Note that some songs like the ones in Week 6 will open a console window in debug mode.    
