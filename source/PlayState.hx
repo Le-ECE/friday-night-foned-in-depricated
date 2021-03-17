@@ -156,6 +156,10 @@ class PlayState extends MusicBeatState
 	var downUpBorder:Float;
 	var upRightBorder:Float;
 	var arrowEnd:Float;
+
+	var resizeFactor:Int = 2;
+	var xOffset:Int = 600;
+	var yOffset:Int = 300;
 	
 	public static var campaignScore:Int = 0;
 
@@ -218,22 +222,13 @@ class PlayState extends MusicBeatState
 		switch (SONG.song.toLowerCase())
 		{
 			case 'tutorial':
-				dialogue = ["Hey you're pretty cute.", 'Use the arrow keys to keep up \nwith me singing.'];
+				dialogue = CoolUtil.coolTextFile(Paths.txt('tutorial/tutorialDialogue'));
 			case 'bopeebo':
-				dialogue = [
-					'HEY!',
-					"You think you can just sing\nwith my daughter like that?",
-					"If you want to date her...",
-					"You're going to have to go \nthrough ME first!"
-				];
+				dialogue = CoolUtil.coolTextFile(Paths.txt('bopeebo/bopeeboDialogue'));
 			case 'fresh':
-				dialogue = ["Not too shabby boy.", ""];
+				dialogue = CoolUtil.coolTextFile(Paths.txt('fresh/freshDialogue'));
 			case 'dadbattle':
-				dialogue = [
-					"gah you think you're hot stuff?",
-					"If you can beat me here...",
-					"Only then I will even CONSIDER letting you\ndate my daughter!"
-				];
+				dialogue = CoolUtil.coolTextFile(Paths.txt('dadbattle/dadbattleDialogue'));
 			case 'senpai':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('senpai/senpaiDialogue'));
 			case 'roses':
@@ -249,12 +244,13 @@ class PlayState extends MusicBeatState
 
 			var hallowTex = Paths.getSparrowAtlas('halloween_bg');
 
-			halloweenBG = new FlxSprite(-200, -100);
+			halloweenBG = new FlxSprite(-200 + xOffset, -100 + yOffset);
 			halloweenBG.frames = hallowTex;
 			halloweenBG.animation.addByPrefix('idle', 'halloweem bg0');
 			halloweenBG.animation.addByPrefix('lightning', 'halloweem bg lightning strike', 24, false);
 			halloweenBG.animation.play('idle');
 			halloweenBG.antialiasing = true;
+			halloweenBG.setGraphicSize(Std.int(halloweenBG.width * resizeFactor));
 			add(halloweenBG);
 
 			isHalloween = true;
@@ -600,21 +596,35 @@ class PlayState extends MusicBeatState
 
 		gf = new Character(400, 130, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
+		
+		boyfriend = new Boyfriend(770, 450, SONG.player1);
+
+		gf.setGraphicSize(Std.int(gf.width * resizeFactor * 3/4));
+		gf.x += xOffset * 3/8;
+		gf.y += yOffset * 3/8;
+
+		boyfriend.setGraphicSize(Std.int(boyfriend.width * resizeFactor * 3/4));
+		boyfriend.x += xOffset * 3/8;
+		boyfriend.y += yOffset * 3/8;
 
 		dad = new Character(100, 100, SONG.player2);
-
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
 
 		switch (SONG.player2)
 		{
 			case 'gf':
-				dad.setPosition(gf.x, gf.y);
+				dad.setGraphicSize(Std.int(dad.width * resizeFactor));
+				dad.y += 300;
 				gf.visible = false;
-				if (isStoryMode)
-				{
-					camPos.x += 600;
-					tweenCamIn();
-				}
+
+				//dad.setPosition(gf.x, gf.y);
+				//if (isStoryMode)
+				//{
+				//	camPos.x += 600;
+				//	tweenCamIn();
+				//}
+
+				// add some new cam pos here
 
 			case "spooky":
 				dad.y += 200;
@@ -627,6 +637,9 @@ class PlayState extends MusicBeatState
 			case 'pico':
 				camPos.x += 600;
 				dad.y += 300;
+			case 'limo':
+				dad.setGraphicSize(Std.int(dad.width * resizeFactor * 3/4));
+				dad.y += 400;
 			case 'parents-christmas':
 				dad.x -= 500;
 			case 'senpai':
@@ -643,15 +656,22 @@ class PlayState extends MusicBeatState
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
 		}
 
-
-		
-		boyfriend = new Boyfriend(770, 450, SONG.player1);
-
 		// REPOSITIONING PER STAGE
 		switch (curStage)
 		{
+			case 'spooky':
+
 			case 'limo':
-				boyfriend.y -= 220;
+				gf.x -= xOffset * 3/8;
+				gf.y -= yOffset * 3/8;
+				boyfriend.x -= xOffset * 3/8;
+				boyfriend.y -= yOffset * 3/8;
+
+				gf.setGraphicSize(Std.int(gf.width/(resizeFactor * 3/4)));
+				boyfriend.setGraphicSize(Std.int(boyfriend.width/(resizeFactor * 3/4)));
+
+				gf.y += 75;
+				boyfriend.y -= 205;
 				boyfriend.x += 260;
 
 				resetFastCar();
@@ -672,10 +692,7 @@ class PlayState extends MusicBeatState
 				// trailArea.scrollFactor.set();
 
 				var evilTrail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
-				// evilTrail.changeValuesEnabled(false, false, false, false);
-				// evilTrail.changeGraphic()
 				add(evilTrail);
-				// evilTrail.scrollFactor.set(1.1, 1.1);
 
 				boyfriend.x += 200;
 				boyfriend.y += 220;
@@ -685,7 +702,7 @@ class PlayState extends MusicBeatState
 
 		add(gf);
 
-		// Shitty layering but whatev it works LOL
+		// Shitty layering but whatev it works LOL (wow this is actually horrible - phykro)
 		if (curStage == 'limo')
 			add(limo);
 
@@ -1786,49 +1803,75 @@ class PlayState extends MusicBeatState
 	
 			var daRating:String = "sick";
 	
-			if (noteDiff > Conductor.safeZoneOffset * 2)
+			if (noteDiff > Conductor.safeZoneOffset * 24)
 				{
 					daRating = 'shit';
 					totalNotesHit -= 2;
 					score = -3000;
+					ss = false;
+					noteMiss(0);
+					health -= 0.5;
+					shits++;
+				}
+				else if (noteDiff < Conductor.safeZoneOffset * -24)
+				{
+					daRating = 'shit';
+					totalNotesHit -= 2;
+					score = -3000;
+					noteMiss(0);
+					health -= 0.5;
 					ss = false;
 					shits++;
 				}
-				else if (noteDiff < Conductor.safeZoneOffset * -2)
+				else if (noteDiff < Conductor.safeZoneOffset * -0.45)
 				{
-					daRating = 'shit';
-					totalNotesHit -= 2;
-					score = -3000;
+					daRating = 'bad';
+					score = -1000;
+					totalNotesHit += 0.2;
+					noteMiss(0);
 					ss = false;
-					shits++;
+					health -= 0.2;
+					bads++;
 				}
 				else if (noteDiff > Conductor.safeZoneOffset * 0.45)
 				{
 					daRating = 'bad';
 					score = -1000;
 					totalNotesHit += 0.2;
+					noteMiss(0);
+					health -= 0.2;
 					ss = false;
 					bads++;
+				}
+				else if (noteDiff < Conductor.safeZoneOffset * -0.25)
+				{
+					daRating = 'good';
+					totalNotesHit += 0.65;
+					score = 200;
+					health -= 0.04;
+					ss = false;
+					goods++;
 				}
 				else if (noteDiff > Conductor.safeZoneOffset * 0.25)
 				{
 					daRating = 'good';
 					totalNotesHit += 0.65;
 					score = 200;
+					health -= 0.04;
 					ss = false;
 					goods++;
 				}
 			if (daRating == 'sick')
 			{
 				totalNotesHit += 1;
+				if (health < 2)
+					health += 0.15;		// default value is 0.1, slight increase to account for removal of health += in goodNoteHit()
 				sicks++;
 			}
 		
 	
 			if (daRating != 'shit' || daRating != 'bad')
 				{
-	
-	
 			songScore += score;
 	
 			/* if (combo > 60)
@@ -1883,9 +1926,13 @@ class PlayState extends MusicBeatState
 	
 			var seperatedScore:Array<Int> = [];
 	
-			seperatedScore.push(Math.floor(combo / 100));
-			seperatedScore.push(Math.floor((combo - (seperatedScore[0] * 100)) / 10));
-			seperatedScore.push(combo % 10);
+			var comboString:String = (combo + "");
+
+			if (comboString.length == 2)
+				seperatedScore.push(0);
+
+			for(i in 0...comboString.length)
+				seperatedScore.push(Std.parseInt(comboString.charAt(i)));
 	
 			var daLoop:Int = 0;
 			for (i in seperatedScore)
@@ -2420,11 +2467,6 @@ class PlayState extends MusicBeatState
 					else
 						totalNotesHit += 1;
 		
-					if (note.noteData >= 0)
-						health += 0.023;
-					else
-						health += 0.004;
-
 					switch (note.noteData)
 					{
 						case 2:
