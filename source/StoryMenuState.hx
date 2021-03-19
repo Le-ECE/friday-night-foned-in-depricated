@@ -33,7 +33,7 @@ class StoryMenuState extends MusicBeatState
 	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true];
 
 	var weekCharacters:Array<Dynamic> = [
-		['dad', 'gf', 'bf'],
+		['bfConfirm', 'gf', 'bf'],
 		['dad', 'gf', 'bf'],
 		['spooky', 'gf', 'bf'],
 		['pico', 'gf', 'bf'],
@@ -157,6 +157,7 @@ class StoryMenuState extends MusicBeatState
 		// Top-left corner is (0, 0), Bottom Left is (FlxG.width, FlxG.height)
 			// offset.set(-x, -y), where offset.set(0, 100) moves the sprite 100 pixels up
 			// offset.set(100, 0) moves sprite 100 pixels left
+		grpWeekCharacters.members[0].visible = false;
 		grpWeekCharacters.members[0].offset.set(-100, -75);
 		grpWeekCharacters.members[1].offset.set(-150, -100);
 		grpWeekCharacters.members[2].offset.set(-300, -200);
@@ -418,14 +419,19 @@ class StoryMenuState extends MusicBeatState
 		// offset.set(100, 0) moves sprite 100 pixels left
 	function updateText()
 	{
+		grpWeekCharacters.members[0].flipX = false;
+		grpWeekCharacters.members[0].visible = true;
 		grpWeekCharacters.members[0].animation.play(weekCharacters[curWeek][0]);
 		grpWeekCharacters.members[1].animation.play(weekCharacters[curWeek][1]);
 		grpWeekCharacters.members[2].animation.play(weekCharacters[curWeek][2]);
-		grpWeekCharacters.members[0].flipX = false;
+
 		txtTracklist.text = "Tracks\n";
 
 		switch (grpWeekCharacters.members[0].animation.curAnim.name)
 		{
+			case 'bfConfirm':
+				grpWeekCharacters.members[0].visible = false;
+				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1 * resizeFactor));
 			case 'dad':
 				grpWeekCharacters.members[0].offset.set(-100, -75);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 0.95 * resizeFactor));
