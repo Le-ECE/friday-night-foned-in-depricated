@@ -638,10 +638,10 @@ class PlayState extends MusicBeatState
 				dad.y += resizeFactor * 125;
 			case 'parents-christmas':
 				dad.setGraphicSize(Std.int(dad.width * resizeFactor));
-				dad.x -= resizeFactor * 200;
-				dad.y += resizeFactor * 100;
+				dad.x -= resizeFactor * 50;
+				dad.y += resizeFactor * 120;
 			case 'monster-christmas':
-				dad.x += resizeFactor * 50;
+				dad.x -= resizeFactor * 150;
 				dad.y += resizeFactor * 115;
 			case 'senpai':
 				dad.x += resizeFactor * 75;
@@ -665,18 +665,22 @@ class PlayState extends MusicBeatState
 				// add more cam zoom or  something
 				gf.setGraphicSize(Std.int(gf.width));
 				gf.x -= resizeFactor * 75;
-				gf.y -= resizeFactor * 90;
+				gf.y -= resizeFactor * 100;
 
 				boyfriend.setGraphicSize(Std.int(boyfriend.width));
 				boyfriend.x += resizeFactor * 110;
-				boyfriend.y -= resizeFactor * 170;
+				boyfriend.y -= resizeFactor * 180;
 
 				resetFastCar();
 				add(fastCar);
 
 			case 'mall':
+				gf.x += resizeFactor * 40;
+				gf.y += resizeFactor * 25;
+
 				boyfriend.setGraphicSize(Std.int(boyfriend.width));
-				boyfriend.x += 200;
+				boyfriend.x += resizeFactor * 80;
+				boyfriend.y -= resizeFactor * 45;
 
 			case 'mallEvil':
 				boyfriend.x += 320;
